@@ -1,12 +1,13 @@
-# SPHinX AI Assistant
+# SPHinXsistant
 
-Formal Semesterarbeit prototype for repository-grounded assistance over the
-SPHinXsys and SPHinXsim upstream repositories.
+A repository-grounded AI assistance over the SPHinXsim (including SPHinXsys library) upstream repositories. SPHinXsys and SPHinXsim are open-source C++ multi-physics SPH library and simulator based on an unified computational framework using Smoothed Particle Hydrodynamics (SPH). 
+
+This project provides a local Gradio interface for users to ask questions about the SPHinXsys and SPHinXsim repositories, retrieve relevant code chunks, and receive grounded answers from an LLM.
 
 ## Repository layout
 
 ```text
-SPHinX_AI_Assistant/
+SPHinXsistant/
 |-- apps/       # Local Gradio interface
 |-- configs/    # Project-owned configuration
 |-- data/       # Corpus, evaluation, and user-testing data
@@ -24,7 +25,7 @@ They are full Git clones because synchronization and diff-based processing need
 repository history. `tools/treesitter-chunker` is an external local dependency.
 Generated local user-testing output is not authoritative project source code.
 
-## Local setup (Ubuntu 24.04 ARM64)
+## Local setup (Ubuntu 24.04)
 
 ### 1. Clone the assistant project and upstream repositories
 
@@ -33,8 +34,8 @@ Choose one assistant-project clone option:
 Official / supervisor repository:
 
 ```bash
-git clone https://github.com/Xiangyu-Hu/SPHinXsisstant.git
-cd SPHinXsisstant
+git clone https://github.com/Xiangyu-Hu/SPHinXsistant.git
+cd SPHinXsistant
 ```
 
 Or use the development mirror:
