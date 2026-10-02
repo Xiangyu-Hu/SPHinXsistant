@@ -624,7 +624,8 @@ def build_app() -> gr.Blocks:
 
 
 def main() -> None:
-    build_app().launch(server_name="127.0.0.1", share=False)
+    server_name = os.environ.get("GRADIO_SERVER_NAME", "127.0.0.1")
+    build_app().launch(server_name=server_name, share=False)
 
 
 if __name__ == "__main__":

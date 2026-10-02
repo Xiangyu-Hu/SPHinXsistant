@@ -1,0 +1,14 @@
+.git
+.venv
+.env
+.env.*
+__pycache__
+*.pyc
+*.pyo
+
+repos
+tools
+
+data/user_testing
+
+.DS_Store

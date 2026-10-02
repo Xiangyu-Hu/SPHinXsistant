@@ -129,9 +129,9 @@ For grounded answering or the Gradio app, configure the tested NVIDIA
 OpenAI-compatible provider in the current terminal:
 
 ```bash
-export LLM_API_KEY="your NVIDIA API key"
-export LLM_MODEL="nvidia/nemotron-3-ultra-550b-a55b"
-export LLM_BASE_URL="https://integrate.api.nvidia.com/v1"
+export LLM_API_KEY="your API key"
+export LLM_MODEL="your model name"
+export LLM_BASE_URL="your OpenAI-compatible API base URL"
 ```
 
 ```bash
@@ -153,6 +153,66 @@ apps/gradio_app_v1.py
 
 Gradio runs locally; open the URL printed in the terminal (commonly
 `127.0.0.1:7860`). No public or central deployment is currently claimed.
+
+### Recommended Docker workflow
+
+The Docker workflow is an alternative to the manual setup above. Docker users
+do not need to create the local Python environment or manually clone
+SPHinXsys, SPHinXsim, or treesitter-chunker on the host. Docker is recommended
+for testers; the manual setup remains available for development, debugging,
+and direct local execution. The two workflows are alternatives, not sequential
+requirements.
+
+It requires Docker Engine or Docker Desktop, a project clone with Git metadata,
+and an NVIDIA API key for the currently tested provider. From the project root,
+configure the provider in the current terminal:
+
+```bash
+export LLM_API_KEY="your API key"
+export LLM_MODEL="your model name"
+export LLM_BASE_URL="your OpenAI-compatible API base URL"
+```
+
+```bash
+echo "API_KEY set? ${LLM_API_KEY:+yes}"
+echo "MODEL=$LLM_MODEL"
+echo "BASE_URL=$LLM_BASE_URL"
+```
+
+Then launch:
+
+```bash
+./scripts/run_docker.sh
+```
+
+The script builds the Docker image automatically. Open
+`http://127.0.0.1:7860` in a browser and use `Ctrl+C` to stop the
+container. Gradio binds to `0.0.0.0:7860` inside the container as expected;
+`data/user_testing/` is bind-mounted, so session JSONL persists after the
+container exits.
+
+For repository questions and feedback actions (**Helpful**, **Needs review**,
+and **Suggested correction**), this one-command Docker launch is sufficient.
+To perform an actual Submission V1 `push`, the tester must additionally have
+local Git identity configuration, GitHub SSH authentication through an active
+`ssh-agent`, and write permission for the selected remote (normally
+`origin`). The private SSH key is not copied into the container; host
+`known_hosts` is mounted read-only when SSH forwarding is enabled, and HTTPS
+GitHub remotes are rewritten to SSH only inside the container. Host remote
+configuration is not modified.
+
+For Docker Submission V1 `dry-run`, no additional GitHub write operation is
+performed. For `push`, configure `git user.name` and `git user.email` on
+the host and verify SSH authentication manually, for example:
+
+```bash
+ssh -T git@github.com
+```
+
+GitHub does not provide an interactive shell, so inspect its authentication
+message rather than treating a non-zero exit status alone as failure. Do not
+store private SSH keys, access tokens, or other authentication credentials in
+the project, session JSONL, or Gradio UI.
 
 ### 4. User testing and Submission V1
 
